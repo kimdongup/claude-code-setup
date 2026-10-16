@@ -1,129 +1,104 @@
-# Claude Code 설정 컬렉션
+# CLAUDE.md
 
-이 저장소는 3개의 검증된 Claude Code 공식 문서 리소스를 병합하여 만든 실전 설정 컬렉션입니다.
+> 이 파일은 **이 템플릿의 스터터**입니다. 프로젝트에 복사한 뒤
+> `<각주>` 부분을 실제 내용으로 바꾸세요. 비워 두면 그 항목은 무시됩니다.
+> 자세한 사용법은 [`usage.md`](usage.md) 를 보세요.
 
-## 출처 (Level 10 인증)
+## 이 프로젝트는 무엇인가
 
-| 출처 | 용도 | 주요 내용 |
-|------|------|----------|
-| [ChrisWiles/claude-code-showcase](https://github.com/ChrisWiles/claude-code-showcase) | 설정 (Config) | settings.json, hooks, agents, commands, skills, MCP, GitHub Actions |
-| [nidhinjs/prompt-master](https://github.com/nidhinjs/prompt-master) | 메모리/프롬프트 | SKILL.md 작성법, 프롬프트 패턴, 템플릿 |
-| [zebbern/claude-code-guide](https://github.com/zebbern/claude-code-guide) | 시작 가이드 (Start) | 80개+ 스킬, 9개 에이전트, CLAUDE.md 가이드 |
+<!-- 한두 문장으로. Claude 는 이 설명을 모든 판단의 기준으로 삼습니다. -->
+<프로젝트 이름> 은 <한 문장>. <만드는 것>을 위한 프로젝트입니다.
 
-## 빠른 시작
+## 기술 스택
 
-```bash
-# 1. 이 저장소를 프로젝트에 복사
-git clone https://github.com/YOUR_USERNAME/claude-code-setup.git my-project/.claude
+<!-- 여기 적지 않은 스택은 Claude 가 추측합니다. 적는 게 빠를수록 좋습니다. -->
 
-# 2. 또는 기존 프로젝트에 수동 복사
-cp -r .claude/* my-project/.claude/
-cp CLAUDE.md my-project/CLAUDE.md
+- 언어/런타임:
+- 프레임워크:
+- 테스트 러너:
+- 패키지 매니저:
 
-# 3. Claude Code 설정 적용
-claude mcp add jira npx -y @anthropic/mcp-jira  # 선택사항
-```
+## 명령
 
-## 디렉토리 구조
-
-```
-your-project/
-├── CLAUDE.md              # 프로젝트 기억 (이 파일)
-├── .mcp.json              # MCP 서버 설정 (JIRA, GitHub, Slack 등)
-├── .claude/
-│   ├── settings.json      # 훅, 환경변수, 권한 설정
-│   ├── settings.md        # 훅 설명서 (사람이 읽기 쉬운 버전)
-│   ├── .gitignore         # 로컬/개인 파일 무시 목록
-│   │
-│   ├── agents/            # 전문 AI 에이전트 (9개)
-│   │   ├── code-reviewer.md        # 코드 리뷰 에이전트
-│   │   ├── github-workflow.md      # Git 워크플로 에이전트
-│   │   ├── solution-architect.md   # 솔루션 아키텍트 에이전트
-│   │   ├── security-reviewer.md    # 보안 리뷰 에이전트
-│   │   ├── root-cause-debugger.md  # 근본 원인 디버거
-│   │   ├── runtime-verifier.md     # 런타임 검증기
-│   │   ├── codebase-mapper.md      # 코드베이스 매퍼
-│   │   ├── official-docs-researcher.md  # 공식 문서 연구원
-│   │   └── change-implementer.md   # 변경 구현자
-│   │
-│   ├── commands/          # 슬래시 명령 (6개)
-│   │   ├── onboard.md         # 깊은 태스크 탐색
-│   │   ├── pr-review.md       # PR 리뷰 워크플로
-│   │   ├── pr-summary.md      # PR 요약 생성
-│   │   ├── code-quality.md    # 품질 검사
-│   │   ├── docs-sync.md       # 문서 동기화
-│   │   └── ticket.md          # JIRA/Linear 티켓 워크플로
-│   │
-│   ├── hooks/             # 훅 스크립트 (4개)
-│   │   ├── skill-eval.sh          # 스킬 평가 훅 (셸)
-│   │   ├── skill-eval.js          # 스킬 평가 훅 (Node.js)
-│   │   ├── skill-rules.json       # 패턴 매칭 규칙
-│   │   └── skill-rules.schema.json
-│   │
-│   ├── skills/            # 도메인 지식 스킬 (86개)
-│   │   ├── README.md              # 스킬 개요
-│   │   ├── prompt-master/         # 프롬프트 작성 스킬 (핵심)
-│   │   ├── testing-patterns/      # 테스트 패턴
-│   │   ├── systematic-debugging/  # 체계적 디버깅
-│   │   ├── react-ui-patterns/     # React UI 패턴
-│   │   ├── graphql-schema/        # GraphQL 스키마
-│   │   ├── core-components/       # 디자인 시스템
-│   │   └── ... (80개 이상)
-│   │
-│   └── rules/             # 모듈식 규칙 (선택사항)
-│
-└── .github/
-    └── workflows/
-        ├── pr-claude-code-review.yml           # 자동 PR 리뷰
-        ├── scheduled-claude-code-quality.yml   # 주간 품질 검토
-        ├── scheduled-claude-code-docs-sync.yml # 월간 문서 동기화
-        └── scheduled-claude-code-dependency-audit.yml # 이중주기 의존성 감사
-```
-
-## 설치 방법
-
-### 방법 1: 기존 프로젝트에 적용
+<!-- 자주 쓰는 것만. Claude 는 이걸로 명령을 직접 실행합니다. -->
 
 ```bash
-# 프로젝트 루트에서 실행
-mkdir -p .claude
-cp -r /path/to/claude-code-setup/.claude/* .claude/
-cp /path/to/claude-code-setup/CLAUDE.md ./CLAUDE.md
-cp /path/to/claude-code-setup/.mcp.json ./.mcp.json  # 선택사항
+<설치 명령>
+<개발 서버 실행>
+<테스트 실행>
+<린트/포맷>
 ```
 
-### 방법 2: 새 프로젝트에서 시작
+## 코딩 규칙
+
+<!-- "하지 말 것"이 "할 것"보다 훨씬 자주 지켜지지 않습니다. -->
+
+- 이 프로젝트는 반드시 <규칙>.
+- <금지 사항> 은 쓰지 않는다.
+- <금지 사항> 은 쓰지 않는다.
+
+## 구조
+
+<!-- 3줄 이상 깊게 들어가면 안 됩니다. 경로 → 역할 정도면 충분합니다. -->
+
+| 경로 | 역할 |
+|---|---|
+| `<경로>` | <무엇이 있는지> |
+| `<경로>` | <무엇이 있는지> |
+
+## 자주 하는 작업
+
+<!-- 반복되는 작업을 프롬프트 규칙으로 고정해 두면 매번 설명할 필요가 없습니다. -->
+
+- **<작업명>** — <어떻게 하는지 1~2줄>
+- **<작업명>** — <어떻게 하는지 1~2줄>
+
+## 주의 사항
+
+<!-- 이 저장소에서 실제로 삽질한 것만 적으세요. -->
+
+- <잘못하면 돌아오기 어려운 것>
+- <환경에 따라 달라지는 것>
+
+---
+
+## 이 템플릿이 함께 제공하는 것
+
+`.claude/` 안에 들어 있는 설정입니다. 설치 후 반드시 한 번씩 직접 돌려보세요.
+
+| 종류 | 경로 | 개수 | 역할 |
+|---|---|---|---|
+| 에이전트 | `.claude/agents/` | 9 | 코드 리뷰·보안·디버깅 등 역할 |
+| 스킬 | `.claude/skills/` | 86 | 도메인 지식과 작업 절차 |
+| 명령 | `.claude/commands/` | 6 | `/pr-review` 같은 슬래시 명령 |
+| 훅 | `.claude/hooks/` + `settings.json` | 4 | 자동 포맷·테스트·브랜치 보호 |
+| CI | `.github/workflows/` | 4 | PR 자동 리뷰 |
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/claude-code-setup.git my-project
-cd my-project
-# 이제 Claude Code가 이 설정을 자동으로 읽습니다
+# 훅이 프로젝트에 맞는지 확인 (설치 직후 1회)
+cd <프로젝트>
+claude   # 대화창에서 "설정에 있는 훅이 이 프로젝트에 맞는지 확인해줘"
 ```
 
-## 핵심 구성 요소
+### 템플릿의 알려진 함정 두 가지
 
-### CLAUDE.md - 프로젝트 기억
-Claude Code가 세션 시작 시 자동으로 읽는 프로젝트 메모리 파일입니다. 프로젝트 스택, 코드 스타일, 중요 규칙을 포함합니다.
+1. **테스트 훅이 Jest 전용 플래그를 쓴다** — `--findRelatedTests`, `--passWithNoTests`.
+   Vitest·node:test·pytest 프로젝트라면 반드시 바꾸세요.
+2. **테스트 훅이 실패 분기에 `exit` 이 없다** — 화면에 "Tests failed" 가 떠도
+   종료 코드가 0 이라 Claude Code 는 실패를 모른 채 넘어갑니다. `exit 1` 을 넣으세요.
 
-### .claude/settings.json - 훅 및 환경
-자동 포맷팅, 테스트 실행, 타입 체크, Git 분기 보호 등 자동화 훅을 설정합니다.
+자세한 설명과 교체 코드는 [`usage.md` 의 2장](usage.md#2-설치-직후-반드시-할-일)을 보세요.
 
-### .claude/skills/ - 도메인 지식 (86개)
-프로젝트별 관례와 패턴을 Claude에게 가르치는 스킬 파일들입니다. 각 스킬은 `SKILL.md` 형식으로 작성됩니다.
+---
 
-### .claude/agents/ - 전문 에이전트 (9개)
-특정 목적의 AI 에이전트들입니다. 코드 리뷰, 보안, 아키텍처, 디버깅 등 다양한 역할을 수행합니다.
+## 출처
 
-### .claude/hooks/ - 수명 주기 자동화 (4개)
-프롬프트 제출 전후, 도구 실행 전후에 실행되는 자동화 스크립트입니다. 스킬 자동 추천, 포맷팅, 테스트 실행 등을 포함합니다.
+이 템플릿은 세 저장소의 실사용 부분을 병합했습니다.
 
-### .claude/commands/ - 슬래시 명령 (6개)
-`/pr-review`, `/ticket`, `/onboard` 등 사용자 정의 슬래시 명령입니다.
+| 출처 | 제공한 것 |
+|---|---|
+| [ChrisWiles/claude-code-showcase](https://github.com/ChrisWiles/claude-code-showcase) | `settings.json`, 훅, 에이전트 2개, 명령 6개, CI 워크플로 |
+| [nidhinjs/prompt-master](https://github.com/nidhinjs/prompt-master) | 프롬프트 작성 스킬과 템플릿 레퍼런스 |
+| [zebbern/claude-code-guide](https://github.com/zebbern/claude-code-guide) | 스킬 84개, 에이전트 7개, 시작 가이드 |
 
-## 기여하기
-
-이 저장소는 3개의 우수한 Claude Code 설정 저장소를 병합한 것입니다. 개선 제안이나 새로운 스킬/에이전트 추가는 Pull Request로 접수해 주세요.
-
-## 라이선스
-
-MIT 라이선스 - 자유롭게 사용하고 수정하세요.
+라이선스: MIT

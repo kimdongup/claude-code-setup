@@ -129,7 +129,7 @@ footer{border-top:1px solid var(--line);padding:26px 24px 60px;color:var(--dim);
   <div class="term">
     <div class="bar"><span class="dots">● ● ●</span><span class="ttl">bootstrap — 빈 저장소 + 템플릿 적용</span></div>
     <pre class="body">━━━ STEP 1 ━━━ 빈 폴더에서 시작하기
-2026-10-16 01:23:30
+2026-10-16 01:25:51
 
 
 ╭─ Claude Code 에 입력한 프롬프트
@@ -185,7 +185,7 @@ $ 설정의 훅 정의 개수
   <div class="term">
     <div class="bar"><span class="dots">● ● ●</span><span class="ttl">memory — 프로젝트 규칙을 CLAUDE.md 에 기록</span></div>
     <pre class="body">━━━ STEP 2 ━━━ 프로젝트 기억 만들기
-2026-10-16 01:23:31
+2026-10-16 01:25:51
 
 
 ╭─ Claude Code 에 입력한 프롬프트
@@ -272,7 +272,7 @@ $ 에이전트(역할) 전부
   <div class="term">
     <div class="bar"><span class="dots">● ● ●</span><span class="ttl">tdd — 테스트가 깨지는 것부터 시작해 도메인 구현</span></div>
     <pre class="body">━━━ STEP 3 ━━━ TDD로 할 일 도메인 만들기
-2026-10-16 01:23:31
+2026-10-16 01:25:51
 
 
 ╭─ Claude Code 에 입력한 프롬프트
@@ -310,7 +310,7 @@ $ npm test (아직 실패해야 한다)
   }
   
   Node.js v24.21.0
-  ✖ test/todo-store.test.js (43.115084ms)
+  ✖ test/todo-store.test.js (49.295542ms)
   ℹ tests 1
   ℹ suites 0
   ℹ pass 0
@@ -318,12 +318,12 @@ $ npm test (아직 실패해야 한다)
   ℹ cancelled 0
   ℹ skipped 0
   ℹ todo 0
-  ℹ duration_ms 55.031875
+  ℹ duration_ms 59.760667
   
   ✖ failing tests:
   
   test at test/todo-store.test.js:1:1
-  ✖ test/todo-store.test.js (43.115084ms)
+  ✖ test/todo-store.test.js (49.295542ms)
     &#x27;test failed&#x27;
 ✔ 의도대로 실패함 (종료 코드 1)
   → 여기서 Claude Code의 PostToolUse 훅이 자동으로 npm test 를 돌렸을 것이다.
@@ -332,7 +332,7 @@ $ npm test (아직 실패해야 한다)
   → 테스트가 통과하는 가장 작은 코드만 쓴다.
 
 $ npm test (통과해야 한다)
-  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.625ms)
+  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.504041ms)
   ℹ tests 1
   ℹ suites 0
   ℹ pass 1
@@ -340,15 +340,15 @@ $ npm test (통과해야 한다)
   ℹ cancelled 0
   ℹ skipped 0
   ℹ todo 0
-  ℹ duration_ms 58.310375
+  ℹ duration_ms 63.5735
 ✔ 기대한 결과
 
 ▸ 3) RED — 다음 동작: 항목 추가
 
 $ npm test (구현 전이므로 실패)
-  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.447333ms)
-  ✖ 항목을 추가하면 목록에 1건이 생긴다 (0.121583ms)
-  ✖ 추가한 항목은 미완료 상태로 시작한다 (0.060208ms)
+  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.458458ms)
+  ✖ 항목을 추가하면 목록에 1건이 생긴다 (0.116792ms)
+  ✖ 추가한 항목은 미완료 상태로 시작한다 (0.082833ms)
   ℹ tests 3
   ℹ suites 0
   ℹ pass 1
@@ -356,12 +356,12 @@ $ npm test (구현 전이므로 실패)
   ℹ cancelled 0
   ℹ skipped 0
   ℹ todo 0
-  ℹ duration_ms 59.579667
+  ℹ duration_ms 66.241833
   
   ✖ failing tests:
   
   test at test/todo-store.test.js:11:1
-  ✖ 항목을 추가하면 목록에 1건이 생긴다 (0.121583ms)
+  ✖ 항목을 추가하면 목록에 1건이 생긴다 (0.116792ms)
     TypeError: store.add is not a function
         at TestContext.&lt;anonymous&gt; (file:///private/tmp/claude_code_workspace/output/example/todo-app/test/todo-store.test.js:16:9)
         at Test.runInAsyncScope (node:async_hooks:227:14)
@@ -372,7 +372,7 @@ $ npm test (구현 전이므로 실패)
         at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
   
   test at test/todo-store.test.js:22:1
-  ✖ 추가한 항목은 미완료 상태로 시작한다 (0.060208ms)
+  ✖ 추가한 항목은 미완료 상태로 시작한다 (0.082833ms)
     TypeError: store.add is not a function
         at TestContext.&lt;anonymous&gt; (file:///private/tmp/claude_code_workspace/output/example/todo-app/test/todo-store.test.js:24:9)
         at Test.runInAsyncScope (node:async_hooks:227:14)
@@ -386,9 +386,9 @@ $ npm test (구현 전이므로 실패)
 ▸ 4) GREEN — 추가 동작 구현
 
 $ npm test (통과해야 한다)
-  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.851166ms)
-  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.72275ms)
-  ✔ 추가한 항목은 미완료 상태로 시작한다 (0.07475ms)
+  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.459167ms)
+  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.915791ms)
+  ✔ 추가한 항목은 미완료 상태로 시작한다 (0.078167ms)
   ℹ tests 3
   ℹ suites 0
   ℹ pass 3
@@ -396,18 +396,18 @@ $ npm test (통과해야 한다)
   ℹ cancelled 0
   ℹ skipped 0
   ℹ todo 0
-  ℹ duration_ms 57.639375
+  ℹ duration_ms 68.385125
 ✔ 기대한 결과
 
 ▸ 5) RED — 완료 처리와 삭제
 
 $ npm test (아직 미구현)
-  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.778708ms)
-  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.740875ms)
-  ✔ 추가한 항목은 미완료 상태로 시작한다 (0.113958ms)
-  ✖ 항목을 완료하면 done이 true가 된다 (0.156292ms)
-  ✖ 없는 id를 완료하면 에러를 던진다 (1.090375ms)
-  ✖ 항목을 삭제하면 목록에서 사라진다 (0.075208ms)
+  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.448875ms)
+  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.481833ms)
+  ✔ 추가한 항목은 미완료 상태로 시작한다 (0.196958ms)
+  ✖ 항목을 완료하면 done이 true가 된다 (0.409625ms)
+  ✖ 없는 id를 완료하면 에러를 던진다 (1.039291ms)
+  ✖ 항목을 삭제하면 목록에서 사라진다 (0.070666ms)
   ℹ tests 6
   ℹ suites 0
   ℹ pass 3
@@ -415,12 +415,12 @@ $ npm test (아직 미구현)
   ℹ cancelled 0
   ℹ skipped 0
   ℹ todo 0
-  ℹ duration_ms 76.399625
+  ℹ duration_ms 63.818166
   
   ✖ failing tests:
   
   test at test/todo-store.test.js:28:1
-  ✖ 항목을 완료하면 done이 true가 된다 (0.156292ms)
+  ✖ 항목을 완료하면 done이 true가 된다 (0.409625ms)
     TypeError: store.complete is not a function
         at TestContext.&lt;anonymous&gt; (file:///private/tmp/claude_code_workspace/output/example/todo-app/test/todo-store.test.js:31:9)
         at Test.runInAsyncScope (node:async_hooks:227:14)
@@ -431,7 +431,7 @@ $ npm test (아직 미구현)
         at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
   
   test at test/todo-store.test.js:35:1
-  ✖ 없는 id를 완료하면 에러를 던진다 (1.090375ms)
+  ✖ 없는 id를 완료하면 에러를 던진다 (1.039291ms)
     AssertionError [ERR_ASSERTION]: The input did not match the regular expression /존재하지/. Input:
     
     &#x27;TypeError: store.complete is not a function&#x27;
@@ -462,7 +462,7 @@ $ npm test (아직 미구현)
     }
   
   test at test/todo-store.test.js:40:1
-  ✖ 항목을 삭제하면 목록에서 사라진다 (0.075208ms)
+  ✖ 항목을 삭제하면 목록에서 사라진다 (0.070666ms)
     TypeError: store.remove is not a function
         at TestContext.&lt;anonymous&gt; (file:///private/tmp/claude_code_workspace/output/example/todo-app/test/todo-store.test.js:43:9)
         at Test.runInAsyncScope (node:async_hooks:227:14)
@@ -476,12 +476,12 @@ $ npm test (아직 미구현)
 ▸ 6) GREEN — 완료/삭제 구현
 
 $ npm test (전부 통과)
-  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.45375ms)
-  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.395334ms)
-  ✔ 추가한 항목은 미완료 상태로 시작한다 (0.072666ms)
-  ✔ 항목을 완료하면 done이 true가 된다 (0.932208ms)
-  ✔ 없는 id를 완료하면 에러를 던진다 (0.363959ms)
-  ✔ 항목을 삭제하면 목록에서 사라진다 (0.094208ms)
+  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.5115ms)
+  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.417833ms)
+  ✔ 추가한 항목은 미완료 상태로 시작한다 (0.071833ms)
+  ✔ 항목을 완료하면 done이 true가 된다 (0.508041ms)
+  ✔ 없는 id를 완료하면 에러를 던진다 (0.572125ms)
+  ✔ 항목을 삭제하면 목록에서 사라진다 (0.167292ms)
   ℹ tests 6
   ℹ suites 0
   ℹ pass 6
@@ -489,19 +489,19 @@ $ npm test (전부 통과)
   ℹ cancelled 0
   ℹ skipped 0
   ℹ todo 0
-  ℹ duration_ms 71.899291
+  ℹ duration_ms 66.220291
 ✔ 기대한 결과
 
 ▸ 7) REFACTOR — 그대로 두고 통계 테스트를 추가
 
 $ 리팩터링 후에도 회귀 없음
-  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.472ms)
-  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.456333ms)
-  ✔ 추가한 항목은 미완료 상태로 시작한다 (0.082375ms)
-  ✔ 항목을 완료하면 done이 true가 된다 (0.533167ms)
-  ✔ 없는 id를 완료하면 에러를 던진다 (0.271792ms)
-  ✔ 항목을 삭제하면 목록에서 사라진다 (0.099417ms)
-  ✔ 통계는 전체/완료/미완료 건수를 센다 (0.102209ms)
+  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.473917ms)
+  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.652083ms)
+  ✔ 추가한 항목은 미완료 상태로 시작한다 (0.088167ms)
+  ✔ 항목을 완료하면 done이 true가 된다 (0.529209ms)
+  ✔ 없는 id를 완료하면 에러를 던진다 (0.232125ms)
+  ✔ 항목을 삭제하면 목록에서 사라진다 (0.074375ms)
+  ✔ 통계는 전체/완료/미완료 건수를 센다 (0.091458ms)
   ℹ tests 7
   ℹ suites 0
   ℹ pass 7
@@ -509,7 +509,7 @@ $ 리팩터링 후에도 회귀 없음
   ℹ cancelled 0
   ℹ skipped 0
   ℹ todo 0
-  ℹ duration_ms 64.272458
+  ℹ duration_ms 63.216083
 ✔ 기대한 결과
   → red → green → refactor 3회를 거쳤고, 마지막에 테스트가 8개다.</pre>
   </div>
@@ -526,7 +526,7 @@ $ 리팩터링 후에도 회귀 없음
   <div class="term">
     <div class="bar"><span class="dots">● ● ●</span><span class="ttl">hooks — 설정의 훅을 실제 실행해 검증하고 프로젝트에 맞게 수정</span></div>
     <pre class="body">━━━ STEP 4 ━━━ 훅이 규칙을 지킨다
-2026-10-16 01:23:34
+2026-10-16 01:25:54
 
 
 ╭─ Claude Code 에 입력한 프롬프트
@@ -590,10 +590,10 @@ $ PostToolUse 훅을 그대로 돌리고 종료 코드를 본다
 
 $ 통과: 훅이 0 을 반환
   {&quot;feedback&quot;: &quot;Running tests...&quot;}
-  ✔ 항목을 완료하면 done이 true가 된다 (0.522ms)
-  ✔ 없는 id를 완료하면 에러를 던진다 (0.215167ms)
-  ✔ 항목을 삭제하면 목록에서 사라진다 (0.075417ms)
-  ✔ 통계는 전체/완료/미완료 건수를 센다 (0.092125ms)
+  ✔ 항목을 완료하면 done이 true가 된다 (1.222375ms)
+  ✔ 없는 id를 완료하면 에러를 던진다 (0.434375ms)
+  ✔ 항목을 삭제하면 목록에서 사라진다 (0.102833ms)
+  ✔ 통계는 전체/완료/미완료 건수를 센다 (0.112167ms)
   ℹ tests 7
   ℹ suites 0
   ℹ pass 7
@@ -601,7 +601,7 @@ $ 통과: 훅이 0 을 반환
   ℹ cancelled 0
   ℹ skipped 0
   ℹ todo 0
-  ℹ duration_ms 61.560875
+  ℹ duration_ms 69.649208
   {&quot;feedback&quot;: &quot;Tests passed.&quot;}
 ✔ 기대한 결과
   → 
@@ -639,7 +639,7 @@ $ 깨진 테스트를 감지해 훅이 1 을 반환
   <div class="term">
     <div class="bar"><span class="dots">● ● ●</span><span class="ttl">agents — code-reviewer 와 security-reviewer 로 지적을 받고 반영</span></div>
     <pre class="body">━━━ STEP 5 ━━━ 서브에이전트로 리뷰시키기
-2026-10-16 01:23:35
+2026-10-16 01:25:56
 
   → 에이전트는 역할 정의(.md)일 뿐이다. 같은 판정을 결정론적으로 재현하는 검사 스크립트를 작성하고,
   → 그 출력을 에이전트 판정 결과로 제시한다. 사람이 같은 검사를 눈으로 하는 것과 결과는 동일하다.
@@ -665,15 +665,15 @@ $ npm run review — 지적이 나온다
 ▸ 2) 지적을 테스트로 고정
 
 $ 추가한 테스트가 바로 깨진다 — 지적이 맞았다
-  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.517459ms)
-  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.41475ms)
-  ✔ 추가한 항목은 미완료 상태로 시작한다 (1.209959ms)
-  ✔ 항목을 완료하면 done이 true가 된다 (0.198167ms)
-  ✔ 없는 id를 완료하면 에러를 던진다 (0.27175ms)
-  ✔ 항목을 삭제하면 목록에서 사라진다 (0.086667ms)
-  ✔ 통계는 전체/완료/미완료 건수를 센다 (0.110834ms)
-  ✖ 초기 항목도 각각 구분되어 개별 처리된다 (0.502917ms)
-  ✖ 저장소마다 id 시퀀스가 독립적이다 (0.163459ms)
+  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.507334ms)
+  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.510416ms)
+  ✔ 추가한 항목은 미완료 상태로 시작한다 (0.562375ms)
+  ✔ 항목을 완료하면 done이 true가 된다 (0.119917ms)
+  ✔ 없는 id를 완료하면 에러를 던진다 (0.227375ms)
+  ✔ 항목을 삭제하면 목록에서 사라진다 (0.0845ms)
+  ✔ 통계는 전체/완료/미완료 건수를 센다 (0.098333ms)
+  ✖ 초기 항목도 각각 구분되어 개별 처리된다 (0.478792ms)
+  ✖ 저장소마다 id 시퀀스가 독립적이다 (0.13725ms)
   ℹ tests 9
   ℹ suites 0
   ℹ pass 7
@@ -681,12 +681,12 @@ $ 추가한 테스트가 바로 깨진다 — 지적이 맞았다
   ℹ cancelled 0
   ℹ skipped 0
   ℹ todo 0
-  ℹ duration_ms 65.319792
+  ℹ duration_ms 67.367292
   
   ✖ failing tests:
   
   test at test/todo-store.test.js:56:1
-  ✖ 초기 항목도 각각 구분되어 개별 처리된다 (0.502917ms)
+  ✖ 초기 항목도 각각 구분되어 개별 처리된다 (0.478792ms)
     AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
     
     true !== false
@@ -707,7 +707,7 @@ $ 추가한 테스트가 바로 깨진다 — 지적이 맞았다
     }
   
   test at test/todo-store.test.js:64:1
-  ✖ 저장소마다 id 시퀀스가 독립적이다 (0.163459ms)
+  ✖ 저장소마다 id 시퀀스가 독립적이다 (0.13725ms)
     AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
     
     9 !== 1
@@ -736,15 +736,15 @@ $ 수정된 부분
   32:      items = [...items, { id: ++seq, title: title.trim(), done: false }];
 
 $ 테스트 전부 통과
-  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (1.08125ms)
-  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.559875ms)
-  ✔ 추가한 항목은 미완료 상태로 시작한다 (0.54125ms)
-  ✔ 항목을 완료하면 done이 true가 된다 (0.132833ms)
-  ✔ 없는 id를 완료하면 에러를 던진다 (0.247458ms)
-  ✔ 항목을 삭제하면 목록에서 사라진다 (0.08825ms)
-  ✔ 통계는 전체/완료/미완료 건수를 센다 (0.106583ms)
-  ✔ 초기 항목도 각각 구분되어 개별 처리된다 (0.081917ms)
-  ✔ 저장소마다 id 시퀀스가 독립적이다 (0.088125ms)
+  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.616333ms)
+  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.443084ms)
+  ✔ 추가한 항목은 미완료 상태로 시작한다 (0.466334ms)
+  ✔ 항목을 완료하면 done이 true가 된다 (0.134959ms)
+  ✔ 없는 id를 완료하면 에러를 던진다 (0.259208ms)
+  ✔ 항목을 삭제하면 목록에서 사라진다 (0.213417ms)
+  ✔ 통계는 전체/완료/미완료 건수를 센다 (0.345958ms)
+  ✔ 초기 항목도 각각 구분되어 개별 처리된다 (0.166458ms)
+  ✔ 저장소마다 id 시퀀스가 독립적이다 (0.1335ms)
   ℹ tests 9
   ℹ suites 0
   ℹ pass 9
@@ -752,7 +752,7 @@ $ 테스트 전부 통과
   ℹ cancelled 0
   ℹ skipped 0
   ℹ todo 0
-  ℹ duration_ms 64.152542
+  ℹ duration_ms 67.901708
 ✔ 기대한 결과
 
 $ 리뷰 지적 소진
@@ -800,16 +800,16 @@ $ npm run audit — HIGH 소진
 ✔ 기대한 결과
 
 $ 보안 수정 후 전체 테스트 통과
-  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.602ms)
-  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.445084ms)
-  ✔ 추가한 항목은 미완료 상태로 시작한다 (0.710208ms)
-  ✔ 항목을 완료하면 done이 true가 된다 (0.1105ms)
-  ✔ 없는 id를 완료하면 에러를 던진다 (0.363833ms)
-  ✔ 항목을 삭제하면 목록에서 사라진다 (0.278292ms)
-  ✔ 통계는 전체/완료/미완료 건수를 센다 (0.158958ms)
-  ✔ 초기 항목도 각각 구분되어 개별 처리된다 (0.090334ms)
-  ✔ 저장소마다 id 시퀀스가 독립적이다 (0.104625ms)
-  ✔ 경로 순회 시도는 거부된다 (0.753833ms)
+  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.845292ms)
+  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.549958ms)
+  ✔ 추가한 항목은 미완료 상태로 시작한다 (0.607458ms)
+  ✔ 항목을 완료하면 done이 true가 된다 (0.093625ms)
+  ✔ 없는 id를 완료하면 에러를 던진다 (0.215125ms)
+  ✔ 항목을 삭제하면 목록에서 사라진다 (0.072375ms)
+  ✔ 통계는 전체/완료/미완료 건수를 센다 (0.091208ms)
+  ✔ 초기 항목도 각각 구분되어 개별 처리된다 (0.068083ms)
+  ✔ 저장소마다 id 시퀀스가 독립적이다 (0.083417ms)
+  ✔ 경로 순회 시도는 거부된다 (0.633291ms)
   ℹ tests 10
   ℹ suites 0
   ℹ pass 10
@@ -817,7 +817,7 @@ $ 보안 수정 후 전체 테스트 통과
   ℹ cancelled 0
   ℹ skipped 0
   ℹ todo 0
-  ℹ duration_ms 66.839792
+  ℹ duration_ms 69.400083
 ✔ 기대한 결과</pre>
   </div>
   <figcaption>example/logs/5-agents.log</figcaption>
@@ -835,7 +835,7 @@ $ 보안 수정 후 전체 테스트 통과
   <div class="term">
     <div class="bar"><span class="dots">● ● ●</span><span class="ttl">quality — /code-quality 로 게이트를 만들고 CI로 고정</span></div>
     <pre class="body">━━━ STEP 6 ━━━ 명령으로 돌리고 CI로 지킨다
-2026-10-16 01:23:37
+2026-10-16 01:25:57
 
 
 ╭─ Claude Code 에 입력한 프롬프트
@@ -850,16 +850,16 @@ $ npm run quality
   
   ▸ 테스트
   $ npm test --silent
-  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.557791ms)
-  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.449709ms)
-  ✔ 추가한 항목은 미완료 상태로 시작한다 (0.476792ms)
-  ✔ 항목을 완료하면 done이 true가 된다 (0.101625ms)
-  ✔ 없는 id를 완료하면 에러를 던진다 (0.223084ms)
-  ✔ 항목을 삭제하면 목록에서 사라진다 (0.07575ms)
-  ✔ 통계는 전체/완료/미완료 건수를 센다 (0.094208ms)
-  ✔ 초기 항목도 각각 구분되어 개별 처리된다 (0.122792ms)
-  ✔ 저장소마다 id 시퀀스가 독립적이다 (0.177084ms)
-  ✔ 경로 순회 시도는 거부된다 (1.532166ms)
+  ✔ 빈 저장소에서 목록을 조회하면 0건이다 (0.53575ms)
+  ✔ 항목을 추가하면 목록에 1건이 생긴다 (0.418791ms)
+  ✔ 추가한 항목은 미완료 상태로 시작한다 (0.558541ms)
+  ✔ 항목을 완료하면 done이 true가 된다 (0.145583ms)
+  ✔ 없는 id를 완료하면 에러를 던진다 (0.276ms)
+  ✔ 항목을 삭제하면 목록에서 사라진다 (0.084041ms)
+  ✔ 통계는 전체/완료/미완료 건수를 센다 (0.168083ms)
+  ✔ 초기 항목도 각각 구분되어 개별 처리된다 (0.088833ms)
+  ✔ 저장소마다 id 시퀀스가 독립적이다 (0.096833ms)
+  ✔ 경로 순회 시도는 거부된다 (0.875167ms)
   ℹ tests 10
   ℹ suites 0
   ℹ pass 10
@@ -867,7 +867,7 @@ $ npm run quality
   ℹ cancelled 0
   ℹ skipped 0
   ℹ todo 0
-  ℹ duration_ms 109.322375
+  ℹ duration_ms 74.315708
   
   ▸ 코드 리뷰
   $ npm run review --silent
@@ -921,8 +921,8 @@ $ git commit
 ▸ 결과
 
 $ 커밋 내역
-  5707e1b feat: 할 일 도메인 TDD 구현 + 경로 순회 방어
-  3804024 chore: 프로젝트 시작
+  c63f442 feat: 할 일 도메인 TDD 구현 + 경로 순회 방어
+  a425dbd chore: 프로젝트 시작
 
 $ 소스 변경 내역 (.claude 제외)
    .github/workflows/ci.yml   | 27 ++++++++++++++++
