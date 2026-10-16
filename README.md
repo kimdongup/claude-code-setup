@@ -1,115 +1,105 @@
-# Claude Code 설정 컬렉션
+# claude-code-setup
 
-> 3개의 검증된 Claude Code 공식 문서 리소스를 병합하여 만든 실전 설정 컬렉션입니다. 59개 URL 중 L10 등급 3개를 선별하여 실제 사용할 수 있는 환경으로 구성했습니다.
+Claude Code 설정을 한 곳에 모아 둔 템플릿과, 그것을 실제 프로젝트에 적용한 기록입니다.
 
-## 📋 출처 (Level 10 인증)
+```
+.
+├── template/          ← 설정 템플릿 (이 저장소의 본체)
+│   ├── .claude/         스킬 86 · 에이전트 9 · 명령 6 · 훅 4
+│   ├── CLAUDE.md        프로젝트 기억
+│   ├── usage.md         ★ 사용법 — 여기서부터 읽으세요
+│   └── .github/         CI 워크플로
+└── example/           ← 할 일 앱 데모 (실행해 보는 용도)
+    ├── walkthrough.html ★ 단계별 스크린샷 가이드
+    ├── run-demo.sh      한 번에 전부 돌리기
+    └── steps/           6개 단계 스크립트
+```
 
-| # | 출처 | 카테고리 | 주요 내용 |
-|---|------|----------|----------|
-| 1 | [ChrisWiles/claude-code-showcase](https://github.com/ChrisWiles/claude-code-showcase) | 설정 (Config) | settings.json, hooks, agents, commands, skills, MCP, GitHub Actions |
-| 2 | [nidhinjs/prompt-master](https://github.com/nidhinjs/prompt-master) | 메모리/프롬프트 | SKILL.md 작성법, 프롬프트 패턴, 템플릿 |
-| 3 | [zebbern/claude-code-guide](https://github.com/zebbern/claude-code-guide) | 시작 가이드 (Start) | 80개+ 스킬, 9개 에이전트, CLAUDE.md 가이드 |
+---
 
-## 🚀 빠른 시작
-
-### 1. 이 저장소를 프로젝트에 적용
+## 바로 해보기
 
 ```bash
-# 기존 프로젝트에 복사
-mkdir -p my-project/.claude
-cp -r .claude/* my-project/.claude/
-cp CLAUDE.md my-project/CLAUDE.md
-cp .mcp.json my-project/.mcp.json  # 선택사항 (MCP 서버 설정)
+git clone https://github.com/kimdongup/claude-code-setup.git
+cd claude-code-setup
+
+open example/walkthrough.html   # 스크린샷 가이드
+open template/usage.md          # 사용법
+./example/run-demo.sh           # 데모를 직접 실행
 ```
 
-### 2. 또는 새 프로젝트에서 시작
+프로젝트에 적용하는 방법:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/claude-code-setup.git my-project
-cd my-project
+cp -R template/.claude  my-project/
+cp    template/CLAUDE.md my-project/CLAUDE.md     # 선택
+cp    template/.mcp.json my-project/.mcp.json     # 선택
 ```
 
-## 📦 포함된 구성 요소
+---
 
-| 항목 | 개수 | 설명 |
-|------|------|------|
-| **스킬 (Skills)** | 86개 | 도메인 지식, 테스트, 디버깅, 보안, API, 데이터베이스 등 |
-| **에이전트 (Agents)** | 9개 | 코드 리뷰, 솔루션 아키텍트, 보안 리뷰, 디버거 등 |
-| **슬래시 명령 (Commands)** | 6개 | PR 리뷰, 온보딩, 티켓, 코드 품질, 문서 동기화 등 |
-| **훅 (Hooks)** | 4개 | 스킬 평가, 자동 포맷팅, 테스트 실행 등 |
-| **GitHub Actions** | 4개 | PR 리뷰, 품질 검토, 문서 동기화, 의존성 감사 |
+## 이 저장소가 말하는 것
 
-## 📁 디렉토리 구조
+Claude Code 설정을 모으는 일 자체는 어렵지 않습니다. 어려운 건
+**모아 놓고 실제 프로젝트에서 안 깨지게 만드는 것**입니다.
 
-```
-claude-code-setup/
-├── CLAUDE.md              # 프로젝트 메모리 (프롬프트 가이드 포함)
-├── .claude/
-│   ├── settings.json      # 훅, 환경변수, 권한 설정
-│   ├── settings.md        # 훅 설명서
-│   ├── .gitignore         # 로컬 파일 무시 목록
-│   ├── .mcp.json          # MCP 서버 설정
-│   ├── agents/            # 9개 전문 에이전트
-│   ├── commands/          # 6개 슬래시 명령
-│   ├── hooks/             # 4개 자동화 훅
-│   ├── skills/            # 86개 도메인 지식 스킬
-│   └── rules/             # 모듈식 규칙
-├── .github/
-│   └── workflows/         # 4개 CI/CD 워크플로
-├── LICENSE
-└── README.md
+그래서 예시(`example/`)를 전부 실제로 실행해 두었습니다. 그 과정에서 템플릿의 실제 결함도 나왔습니다.
+
+### 발견한 함정 — 훅이 실패를 모른다
+
+템플릿의 테스트 훅 원문:
+
+```bash
+if [ $exit_code -eq 0 ]; then
+  echo '{"feedback": "Tests passed."}'
+else
+  echo '{"feedback": "Tests failed. See output above."}' >&2
+fi          # ← 여기서 끝. exit 코드는 0
 ```
 
-## 🎯 주요 기능
+테스트가 깨져도 메시지만 찍고 **종료 코드가 0** 입니다. Claude Code 는 그걸 보고
+문제가 없었다고 판단하고 다음 단계로 넘어갑니다. `example/` 4단계가 이걸 그대로 재현합니다.
 
-### 설정 (Config) - ChrisWiles/claude-code-showcase
-- **settings.json**: 훅, 환경변수, 권한 설정
-- **hooks**: 스킬 평가, 자동 포맷팅, 테스트 실행, 타입 체크
-- **agents**: 코드 리뷰, GitHub 워크플로 에이전트
-- **commands**: 온보딩, PR 리뷰, 티켓 워크플로 등
-- **MCP**: JIRA, GitHub, Slack 등 연동 서버 설정
-- **GitHub Actions**: 자동 PR 리뷰, 주간 품질 검토 등
-
-### 메모리/프롬프트 - nidhinjs/prompt-master
-- **SKILL.md**: 프롬프트 작성 가이드라인
-- **references/templates.md**: 프롬프트 템플릿 모음
-- **references/patterns.md**: 프롬프트 패턴 모음
-
-### 시작 가이드 (Start) - zebbern/claude-code-guide
-- **86개 스킬**: 보안, 데이터베이스, API, 프론트엔드, 백엔드 등
-- **9개 에이전트**: 코드 리뷰, 아키텍트, 디버거, 연구원 등
-- **CLAUDE.md**: 프로젝트 메모리 작성 가이드
-
-## 🛠️ 사용 예시
-
-### 코드 리뷰 에이전트 호출
-```
-@code-reviewer 이 PR을 리뷰해줘
+```bash
+  {"feedback": "Tests failed. See output above."}
+  훅 종료 코드: 0          ← Claude Code 는 여기서 멈추지 않는다
 ```
 
-### 테스트 스킬 사용
-```
-새로운 API 엔드포인트에 대한 테스트를 작성해줘. testing-patterns 스킬을 사용해.
-```
+고친 버전은 실패 분기에 `exit 1` 을 넣습니다.
 
-### 티켓 워크플로
-```
-/ticket PROJ-123
-# JIRA 티켓을 읽고, 코드를 구현하고, 상태를 업데이트합니다
-```
+### 발견한 함정 2 — 훅은 예시 값이다
 
-## 📜 라이선스
+테스트 훅이 `npm test -- --findRelatedTests` 를 호출하는데, 이건 **Jest 전용 플래그**입니다.
+Vitest·node:test·pytest 프로젝트에서는 그대로 실패합니다.
 
-MIT 라이선스 - 자유롭게 사용, 수정, 배포할 수 있습니다.
+설치 직후 반드시 훅을 한 번씩 직접 돌려보세요. 안 맞으면 **끄는 게 정답**입니다.
 
-## 🤝 기여
+---
 
-이 저장소는 3개의 오픈소스 Claude Code 설정 저장소를 병합한 것입니다. 새로운 스킬, 에이전트, 혹은 개선 제안은 Pull Request로 환영합니다.
+## 구성 요소 네 가지
 
-## 🔗 관련 링크
+| | 파일 | 무슨 일을 하나 | 언제 읽히나 |
+|---|---|---|---|
+| 메모리 | `CLAUDE.md` | 이 프로젝트 규칙 | 매 세션 |
+| 지식 | `.claude/skills/*/SKILL.md` | 잘하는 방법 | 관련 작업할 때 |
+| 역할 | `.claude/agents/*.md` | 일하는 방식 | 호출 또는 자동 선택 |
+| 명령 | `.claude/commands/*.md` | 반복 지시 | `/이름` 입력 |
 
-- [Claude Code 공식 문서](https://code.claude.com/docs/en/overview)
-- [Anthropic 공식 문서](https://docs.anthropic.com)
-- [원본 저장소 1](https://github.com/ChrisWiles/claude-code-showcase)
-- [원본 저장소 2](https://github.com/nidhinjs/prompt-master)
-- [원본 저장소 3](https://github.com/zebbern/claude-code-guide)
+자세한 구분 기준과 훅 시점·종료 코드 규약 → [`template/usage.md`](template/usage.md)
+
+---
+
+## 출처
+
+세 저장소의 실사용 부분을 병합했습니다.
+
+| 출처 | 제공한 것 |
+|---|---|
+| [ChrisWiles/claude-code-showcase](https://github.com/ChrisWiles/claude-code-showcase) | `settings.json`, 훅, 에이전트 2개, 명령 6개, CI 워크플로 |
+| [nidhinjs/prompt-master](https://github.com/nidhinjs/prompt-master) | 프롬프트 작성 스킬과 템플릿 레퍼런스 |
+| [zebbern/claude-code-guide](https://github.com/zebbern/claude-code-guide) | 스킬 84개, 에이전트 7개, 시작 가이드 |
+
+병합본의 대가는 **텍스트를 실제로 읽고 프로젝트에 맞게 고쳐야 한다**는 것입니다.
+그래서 사용법 문서도, 실제로 실패해 보는 예제도 함께 두었습니다.
+
+MIT 라이선스. 원본 저장소의 라이선스도 동일합니다.

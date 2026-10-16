@@ -1,27 +1,77 @@
-# Dependencies
-node_modules/
+# ─────────────────────────────────────────────────────────────
+# 템플릿에서 가져온 기본 규칙
+# ─────────────────────────────────────────────────────────────
 
-# Build output
+# 의존성
+node_modules/
+jspm_packages/
+.pnp
+.pnp.js
+
+# 빌드 결과
 dist/
 build/
+out/
+.next/
+*.tsbuildinfo
 
-# Environment
+# 환경 변수 — 절대로 커밋하지 않는다
 .env
 .env.local
 .env.*.local
+*.pem
+*.key
+secrets/
+
+# 로그
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# 캐시
+.cache/
+.parcel-cache/
+.eslintcache
+coverage/
+.nyc_output/
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
+*~
 
 # OS
 .DS_Store
 Thumbs.db
+._*
 
-# Claude Code local files
+# ─────────────────────────────────────────────────────────────
+# 데모 결과물 — run-demo.sh 가 매번 새로 만든다
+# 커밋하지 않는다
+# ─────────────────────────────────────────────────────────────
+
+# 만들어진 할 일 앱
+example/todo-app/
+
+# 실행 로그 (= 스크린샷 원본)
+# walkthrough.html 은 로그에서 생성되지만, 그 자체는 커밋한다
+example/logs/
+
+# 데모가 남기는 임시 훅 파일
+*.hook
+
+# ─────────────────────────────────────────────────────────────
+# Claude Code 로컬 파일 — 팀에 공유하지 않는다
+# ─────────────────────────────────────────────────────────────
+
 .claude/settings.local.json
 .claude/user-team-info.json
 .claude/tasks/
+.claude/todos/
 CLAUDE.local.md
+
+# Claude Code 가 세션 중 만드는 로컬 메타데이터
+.claude/history/
+.claude/statsig/
