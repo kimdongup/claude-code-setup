@@ -1,0 +1,108 @@
+name: PR - Agent Review (Grok Build)
+
+# Claude Code 세트의 `anthropics/claude-code-action` 에 대응하는 워크플로입니다.
+# xAI 는 공식 GitHub Action 을 내지 않으므로 두 갈래로 나눕니다.
+#
+#   job: gate          모델 비의존 검사 — 언제나 돌고, 실패하면 병합을 막습니다
+#   job: agent-review  Grok Build 헤드리스 리뷰 — XAI_API_KEY 가 있을 때만
+#
+# gate 는 어떤 모델로도 같은 판정을 냅니다. 이 구분이 이 템플릿의 핵심입니다.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: pr-agent-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  # ────────────────────────────────────────────────────────────
+  # 모델 비의관 게이트 — 항상 실행
+  # ────────────────────────────────────────────────────────────
+  gate:
+    name: 게이트 (모델 비의존)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 테스트
+        run: npm test
+
+      - name: 코드 리뷰 규칙
+        run: npm run review
+
+      - name: 보안 감사
+        run: npm run audit
+
+      - name: 의존성 감사
+        run: npm audit --audit-level=high
+
+  # ────────────────────────────────────────────────────────────
+  # Grok Build 리뷰 — 비밀 키가 있을 때만
+  # ────────────────────────────────────────────────────────────
+  agent-review:
+    name: Grok Build 리뷰
+    runs-on: ubuntu-latest
+    needs: gate
+    if: ${{ secrets.XAI_API_KEY != '' }}
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Grok Build 설치
+        uses: xai-org/grok-build-action@v1
+        with:
+          xai_api_key: ${{ secrets.XAI_API_KEY }}
+
+      - name: 리뷰 실행
+        env:
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+        run: |
+          grok --trust -p "
+            Review this pull request using the standards in .grok/agents/code-reviewer.md
+
+            1. Read .grok/agents/code-reviewer.md for the checklist
+            2. Run: git diff origin/${{ github.event.pull_request.base.ref }}...HEAD
+            3. Report findings grouped by severity (Critical / Warning / Suggestion)
+
+            Read .grok/agents/security-reviewer.md as well if the diff touches
+            input handling, auth, file access, or secrets.
+          " > review.md
+
+      - name: 리뷰를 PR 댓글로 남기기
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ ! -s review.md ]; then
+            echo "리뷰 결과가 비어 있어 댓글을 남기지 않습니다."
+            exit 0
+          fi
+          {
+            echo '## 🤖 Grok Build 리뷰'
+            echo
+            cat review.md
+          } > body.md
+          gh pr comment "${{ github.event.pull_request.number }}" --body-file body.md
+
+# ──────────────────────────────────────────────────────────────
+# 참고: 위에서 xai-org/grok-build-action 이 없다면 job 이 실패합니다.
+# 그 경우 이 두 줄을 지우고 게이트만 남기세요:
+#
+#   gate 는 모델이 무엇이든 같은 판정을 냅니다.
+#   에이전트 리뷰는 값을 더하는 것이지 게이트를 대체하지 않습니다.
+# ──────────────────────────────────────────────────────────────

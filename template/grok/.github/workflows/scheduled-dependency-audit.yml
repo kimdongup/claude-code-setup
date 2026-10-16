@@ -1,0 +1,65 @@
+name: Scheduled - Dependency Audit
+
+# 격주(1일·15일)마다 의존성을 점검합니다.
+#
+# Claude Code 세트는 에이전트에게 위임했지만, 이 작업은 npm 이 이미 정확히 합니다.
+# 모델이 개입할 여지가 없어야 하는 자리에 모델을 넣지 않는 편이 낫습니다.
+
+on:
+  schedule:
+    - cron: '0 10 1,15 * *'   # 매월 1일·15일 10:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: scheduled-dependency-audit
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    name: 의존성 감사
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 심층 보안 감사
+        run: npm audit --audit-level=moderate
+
+      - name: 알려진 취약점 확인 (있는 경우)
+        run: |
+          if [ -f package-lock.json ]; then
+            npm audit --omit=dev --json > audit.json || true
+            node -e '
+              const a = require("./audit.json");
+              const v = a.vulnerabilities || {};
+              const names = Object.keys(v);
+              if (!names.length) { console.log("알려진 취약점 없음"); process.exit(0); }
+              console.log("취약점 " + names.length + "건:");
+              for (const n of names) console.log("  - " + n + " (" + v[n].severity + ")");
+            '
+          else
+            echo "package-lock.json 없음 — 건너뜁니다"
+          continue-on-error: true
+
+      - name: 업데이트 후보 확인
+        run: |
+          npm outdated || echo "최신 상태이거나 갱신할 정보가 없습니다."
+          continue-on-error: true
+
+      - name: 결과 요약
+        run: |
+          {
+            echo "### 의존성 감사"
+            echo ""
+            echo "- 잠금 파일: $( [ -f package-lock.json ] && echo 있음 || echo 없음 )"
+            echo "- Node: $(node --version)"
+            echo ""
+            echo "상세는 Actions 로그를 확인하세요."
+          } >> "$GITHUB_STEP_SUMMARY"

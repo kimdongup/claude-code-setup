@@ -1,0 +1,72 @@
+name: Scheduled - Code Quality Review
+
+# 주 1회 무작위 디렉터리를 골라 품질을 점검합니다.
+#
+# Claude Code 세트는 에이전트를 야간에 돌렸지만, Grok 세트는 **모델 비의존**
+# 형태로 바꿨습니다. nightly 에 모델을 굴리는 일은 값 대비 비용이 크고,
+# 결정론적 검사는 같은 결과를 더 싸고 더 빨리 냅니다.
+#
+# 에이전트 리뷰를 붙이고 싶다면 PR 단위로 붙이는 편이 낫습니다
+# → pr-agent-review.yml 의 gate job 을 참고하세요.
+
+on:
+  schedule:
+    - cron: '0 8 * * 0'   # 매주 일요일 08:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: scheduled-code-quality
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: 품질 점검
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 의존성 설치
+        run: npm ci
+
+      - name: 테스트
+        run: npm test
+
+      - name: 코드 리뷰 규칙
+        run: npm run review
+
+      - name: 보안 감사
+        run: npm run audit
+
+      - name: 결과 정리
+        run: |
+          echo "### 주간 품질 점검" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| 검사 | 결과 |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| 테스트 | $( [ "${TEST_RC:-0}" -eq 0 ] && echo 통과 || echo 실패 ) |" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "상세는 Actions 로그를 확인하세요."
+
+      - name: 실패하면 이슈 등록
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const title = `[품질] 주간 점검 실패 — ${new Date().toISOString().slice(0,10)}`;
+            const body = [
+              '주기 품질 점검이 실패했습니다.',
+              '',
+              `- 워크플로: [${context.workflow}](${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId})`,
+            ].join('\n');
+            await github.rest.issues.create({ owner, repo, title, body });

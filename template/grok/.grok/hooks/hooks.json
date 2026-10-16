@@ -1,0 +1,41 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$GROK_WORKSPACE_ROOT\"/.grok/hooks/10-pre-tool-use-branch-guard.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+
+    "PostToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$GROK_WORKSPACE_ROOT\"/.grok/hooks/20-post-tool-use-verify.sh",
+            "timeout": 90
+          }
+        ]
+      }
+    ],
+
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$GROK_WORKSPACE_ROOT\"/.grok/hooks/30-user-prompt-skill-hint.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
